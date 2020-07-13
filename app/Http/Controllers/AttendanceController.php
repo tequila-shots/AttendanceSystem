@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -292,9 +293,9 @@ class AttendanceController extends Controller
                     $mail->subject($subject);
                 }
             );
-            error_log('Mail Sent');
+            Log::info('Mail Sent');
         } catch (\Exception $e) {
-            error_log($e->getMessage());
+            Log::info($e->getMessage());
         }
     }
 
@@ -412,10 +413,10 @@ class AttendanceController extends Controller
                         ]);
                     }
                 );
-                error_log('Mail Sent');
+                Log::info('Mail Sent');
                 $success = true;
             } catch (\Exception $e) {
-                error_log($e->getMessage());
+                Log::info($e->getMessage());
                 $success = false;
             } finally {
                 if (File::exists($pathToFile))
