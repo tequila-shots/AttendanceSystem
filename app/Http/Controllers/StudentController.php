@@ -150,11 +150,9 @@ class StudentController extends Controller
                         ]);
                     }
                 );
-                error_log('Mail Sent');
                 Log::info('Mail Sent');
                 $success = true;
             } catch (\Exception $e) {
-                error_log($e->getMessage());
                 Log::info($e->getMessage());
                 $success = false;
             } finally {

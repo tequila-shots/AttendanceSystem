@@ -41,6 +41,12 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        if (strtoupper(env('APP_ENV')) == "PRODUCTION") {
+            if (app()->bound('sentry') && $this->shouldReport($exception)) {
+                app('sentry')->captureException($exception);
+            }
+        }
+
         parent::report($exception);
     }
 

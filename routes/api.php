@@ -19,11 +19,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/debug-sentry', function () {
+    if (strtoupper(env('APP_ENV')) == "PRODUCTION") {
+        throw new Exception('Sentry error!');
+    }
+});
+
 Route::group(['middleware' => ['auth:api']], function () {
     Route::get('test', function () {
         return response()->json(['foo' => 'bar']);
     });
-    Route::get('testing', function() {
+    Route::get('testing', function () {
         $obj = App\Student::query()->where('class', 'SSMCA-II');
         return response()->json(['type' => get_class($obj)]);
     });
@@ -70,7 +76,7 @@ Route::prefix('lecture')->group(function ($router) {
 Route::prefix('attendance')->group(function ($router) {
     Route::post('mark', 'AttendanceController@markAttendance');
     Route::post('get', 'AttendanceController@previousAttendance');
-    Route::post('get/excel','AttendanceController@getExcel');
+    Route::post('get/excel', 'AttendanceController@getExcel');
 });
 
 Route::prefix('stats')->group(function ($router) {

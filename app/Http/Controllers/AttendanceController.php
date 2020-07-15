@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AttendanceListExport;
+use App\Jobs\AlertStudentWithEmail;
 use App\Attendance;
 use App\Lecture;
 use App\Student;
@@ -275,7 +276,7 @@ class AttendanceController extends Controller
     }
 
     /**
-     * Function to send mail to students whose attendance is lower than the eligible criteria
+     * Function to add mail job of students whose attendance is lower than the eligible criteria
      * @param array
      * @param array
      * @return void
@@ -283,18 +284,11 @@ class AttendanceController extends Controller
     private function sendMail($student, $stats)
     {
         try {
-            $subject = "Low Attendance";
-            Mail::send(
-                'email.attendance',
-                ['name' => $student['name'], 'prn' => $student['prn'], 'percentage' => $stats['percentage'], 'subject_name' => $stats['subject_name']],
-                function ($mail) use ($student, $subject) {
-                    $mail->from(env('MAIL_USERNAME'), env('MAIL_PASSWORD'));
-                    $mail->to($student['email'], $student['name']);
-                    $mail->subject($subject);
-                }
-            );
-            Log::info('Mail Sent');
+            // Job is set on high priority queue
+            AlertStudentWithEmail::dispatch($student, $stats)->onConnection(env('QUEUE_DRIVER'))->onQueue('high');
+            Log::info('Job added in Queue');
         } catch (\Exception $e) {
+            Log::info('Adding Job in Queue Failed');
             Log::info($e->getMessage());
         }
     }
