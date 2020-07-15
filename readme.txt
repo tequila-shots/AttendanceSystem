@@ -47,6 +47,6 @@ $sudo supervisorctl start laravel-worker-attendance:*
 ---------------------------------------------------------------------------------------------
 => To Start Application : 
 
-$php artisan service
+$php artisan serve
 $php artisan queue:work --queue=high (in separate terminal) (only if supervisor is not used)
 ----------------------------------------------------------------------------------------------

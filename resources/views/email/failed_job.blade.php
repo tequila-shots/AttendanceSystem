@@ -6,6 +6,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <style type="text/css" rel="stylesheet" media="all">
+        div.command-body {
+            width: 320px;
+            padding: 10px;
+            border: 5px solid gray;
+            margin: 0;
+        }
+
         /* Media Queries */
         @media only screen and (max-width: 500px) {
             .button {
@@ -50,75 +57,90 @@ $style = [
 <?php $fontFamily = 'font-family: \'Raleway\',Arial, \'Helvetica Neue\', Helvetica, sans-serif;'; ?>
 
 <body style="{{ $style['body'] }}">
-<table width="100%" cellpadding="0" cellspacing="0">
-    <tr>
-        <td style="{{ $style['email-wrapper'] }}" align="center">
-            <table width="100%" cellpadding="0" cellspacing="0">
-                <!-- Logo -->
-                <tr>
-                    <td style="{{ $style['email-masthead'] }}">
-                        <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="javascript:void();">
-                            {{ config('app.name') }}
-                        </a>
-                    </td>
-                </tr>
+    <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td style="{{ $style['email-wrapper'] }}" align="center">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <!-- Logo -->
+                    <tr>
+                        <td style="{{ $style['email-masthead'] }}">
+                            <a style="{{ $fontFamily }} {{ $style['email-masthead_name'] }}" href="javascript:void();">
+                                {{ config('app.name') }}
+                            </a>
+                        </td>
+                    </tr>
 
-                <!-- Email Body -->
-                <tr>
-                    <td style="{{ $style['email-body'] }}" width="100%">
-                        <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
-                                    <!-- Greeting -->
-                                    <h1 style="{{ $style['header-1'] }}">
-                                    {{ config('app.name') }} Admin,
-                                    </h1>
+                    <!-- Email Body -->
+                    <tr>
+                        <td style="{{ $style['email-body'] }}" width="100%">
+                            <table style="{{ $style['email-body_inner'] }}" align="center" width="570" cellpadding="0"
+                                cellspacing="0">
+                                <tr>
+                                    <td style="{{ $fontFamily }} {{ $style['email-body_cell'] }}">
+                                        <!-- Greeting -->
+                                        <h1 style="{{ $style['header-1'] }}">
+                                            {{ config('app.name') }} Admin,
+                                        </h1>
 
-                                    <!-- Intro -->
+                                        <!-- Intro -->
 
-                                    <p style="{{ $style['paragraph'] }}">
-                                        Attendance Alter Mail Job has failed. Kindly Contact Technical Team for help !
-                                        <br/>
-                                        Or Else
-                                        Run Command: <i>php artisan queue:failed</i> in terminal 
-                                    </p>
+                                        <p style="{{ $style['paragraph'] }}">
+                                            Attendance Alert Mail Job has failed.<br />
+                                            Kindly Contact Technical Team for help !
+                                            <br />
+                                            Or Else
+                                            <br />
+                                            <div class="command-body">
+                                                Run: <b><i>php artisan queue:failed</i></b>
+                                                <br />in terminal to check
+                                            </div>
+                                            <br />
+                                            <div class="command-body">
+                                                If There are failed jobs
+                                                <br />
+                                                Run: <b><i>php artisan queue:retry all</i></b>
+                                                <br />in terminal to put it in queue again
+                                            </div>
+                                        </p>
 
-                                    <!-- Outro -->
+                                        <!-- Outro -->
 
-                                    <p style="{{ $style['paragraph'] }}">
-                                        Thank you
-                                    </p>
+                                        <p style="{{ $style['paragraph'] }}">
+                                            Thank you
+                                        </p>
 
 
-                                    <!-- Salutation -->
-                                    <p style="{{ $style['paragraph'] }}">
-                                        Regards,<br>{{ config('app.name') }}
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
+                                        <!-- Salutation -->
+                                        <p style="{{ $style['paragraph'] }}">
+                                            Regards,<br>{{ config('app.name') }}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                <!-- Footer -->
-                <tr>
-                    <td>
-                        <table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0" cellspacing="0">
-                            <tr>
-                                <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
-                                    <p style="{{ $style['paragraph-sub'] }}">
-                                        &copy; {{ date('Y') }}
-                                        &nbsp;
-                                        All rights reserved.
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-</table>
+                    <!-- Footer -->
+                    <tr>
+                        <td>
+                            <table style="{{ $style['email-footer'] }}" align="center" width="570" cellpadding="0"
+                                cellspacing="0">
+                                <tr>
+                                    <td style="{{ $fontFamily }} {{ $style['email-footer_cell'] }}">
+                                        <p style="{{ $style['paragraph-sub'] }}">
+                                            &copy; {{ date('Y') }}
+                                            &nbsp;
+                                            All rights reserved.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
+
 </html>

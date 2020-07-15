@@ -23,6 +23,16 @@ class AppServiceProvider extends ServiceProvider
             Log::info(json_encode($event->connectionName));
             Log::info((unserialize((json_decode($event->job->getRawBody(), true))['data']['command']))->queue);
             Log::info($event->exception->getMessage());
+            $subject = "Student Alert Mail Job Failed";
+            Mail::send(
+                'email.failed_job',
+                [],
+                function ($mail) use ($subject) {
+                    $mail->from(env('MAIL_USERNAME'), env('MAIL_PASSWORD'));
+                    $mail->to(env('SYS_ADMIN_MAIL'), env('SYS_ADMIN_NAME'));
+                    $mail->subject($subject);
+                }
+            );
         });
     }
 
