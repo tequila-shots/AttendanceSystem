@@ -21,8 +21,8 @@ class AttendanceTable extends Migration
             $table->tinyInteger('isPresent')->comment('1 - Present | 0 - Absent'); 
             $table->timestamps();
 
-            $table->foreign('lecture_id')->references('id')->on('lectures')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('lecture_id')->references('id')->on('lectures');
+            $table->foreign('student_id')->references('id')->on('students');
         });
     }
 

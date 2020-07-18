@@ -62,10 +62,11 @@ class AttendanceController extends Controller
         $date = date('Y-m-d h:i:s', strtotime($request['date'] . " " . $lecture_obj['time_from']));
 
         # All students
+        # https://laravel.com/docs/5.5/eloquent#chunking-results (for cursor)
         if ($lecture_obj['group'] == NULL) {
-            $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->get();
+            $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->cursor();
         } else {
-            $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->where('group', $lecture_obj['group'])->get();
+            $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->where('group', $lecture_obj['group'])->cursor();
         }
 
         foreach ($students_obj as $item) {
