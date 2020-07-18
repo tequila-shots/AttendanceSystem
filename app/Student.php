@@ -19,7 +19,7 @@ class Student extends Model
      * @var array
      */
     protected $fillable = [
-        'roll_no','name','email','prn','bod','class','group'
+        'roll_no','name','email','prn','dob','class','group'
     ];
 
     /**

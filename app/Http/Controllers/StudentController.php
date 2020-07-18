@@ -51,14 +51,14 @@ class StudentController extends Controller
         $request['class'] = strtoupper($request['class']);
         $request['group'] = strtoupper($request['group']);
 
-        $request = $request->only('roll_no', 'name', 'email', 'bod', 'prn', 'class', 'group');
+        $request = $request->only('roll_no', 'name', 'email', 'dob', 'prn', 'class', 'group');
 
         $rules = [
             'roll_no' => 'required|numeric|unique:students',
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:students',
             'prn' => 'required|unique:students',
-            'bod' => 'date|date_format:Y-m-d',
+            'dob' => 'date|date_format:Y-m-d',
             'class' => 'required',
             'group' => 'required|in:A,B'
         ];
