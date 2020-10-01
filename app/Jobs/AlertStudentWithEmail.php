@@ -99,5 +99,6 @@ class AlertStudentWithEmail implements ShouldQueue
     public function failed(Exception $exception)
     {
         Log::info("From Exception : " . $exception->getMessage());
+        Log::info("From Exception : " . $exception->getMessageStack() . " With : " . $this->attempts());
     }
 }
