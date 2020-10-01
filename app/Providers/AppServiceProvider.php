@@ -20,9 +20,9 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Queue::failing(function (JobFailed $event) {
-            Log::info(json_encode($event->connectionName));
+            Log::info(json_encode($event['connectionName']));
             Log::info((unserialize((json_decode($event->job->getRawBody(), true))['data']['command']))->queue);
-            Log::info($event->exception->getMessage());
+            Log::info($event->exception->getMessageStack());
             $subject = "Student Alert Mail Job Failed";
             Mail::send(
                 'email.failed_job',
