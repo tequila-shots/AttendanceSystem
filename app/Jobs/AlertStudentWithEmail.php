@@ -39,7 +39,7 @@ class AlertStudentWithEmail implements ShouldQueue
      *
      * @var int
      */
-    public $timeout = 120;
+    public $timeout = 0;
 
     /**
      * The number of seconds to wait before retrying the job.
