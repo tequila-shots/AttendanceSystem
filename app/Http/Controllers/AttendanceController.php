@@ -86,6 +86,11 @@ class AttendanceController extends Controller
             $absent_students = array_diff($students, $present_students);
         }
 
+        if (strtolower(env('APP_ENV')) == "local") {
+            # Disable foreign key checks!
+            DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        }
+        
         # Transaction to ensure each entry is inserted
         DB::beginTransaction();
 
@@ -111,6 +116,11 @@ class AttendanceController extends Controller
                 }
             }
             DB::commit();
+            
+            if (strtolower(env('APP_ENV')) == "local") {
+                # Enabling foreign key checks!
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            }
 
             # Get Stats and then send mail if attendance is lower than criteria
             $subject_id = Lecture::select('subject_id')->where('id', $request['lecture_id'])->first()['subject_id'];
@@ -127,6 +137,10 @@ class AttendanceController extends Controller
             return response()->json(["success" => true, "message" => 'Marked Successfully'], 200);
         } catch (\Exception $e) {
             DB::rollback();
+            if (strtolower(env('APP_ENV')) == "local") {
+                # Enabling foreign key checks!
+                DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            }
             return response()->json(["success" => false, "error" => "Something went wrong ! Please try again"], 500);
         }
         return response()->json(["success" => false, "error" => "Something went wrong ! Please try again"], 500);
