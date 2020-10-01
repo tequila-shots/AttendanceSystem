@@ -124,6 +124,13 @@ class AttendanceController extends Controller
 
             # Get Stats and then send mail if attendance is lower than criteria
             $subject_id = Lecture::select('subject_id')->where('id', $request['lecture_id'])->first()['subject_id'];
+            
+            if ($lecture_obj['group'] == NULL) {
+                $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->cursor();
+            } else {
+                $students_obj = Student::select('*')->where('class', $lecture_obj['class'])->where('group', $lecture_obj['group'])->cursor();
+            }
+            
             foreach ($students_obj as $student) {
                 $response = $this->getStats($student['prn'], $subject_id);
                 $response = get_object_vars($response->getData());
